@@ -12,7 +12,8 @@ LevelDB-backed user database for Node.js. This does standard web/mobile app acco
 
 Tools:
 
-- CLI admin tool: [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
+- CLI admin tool (supports local and stand-alone server): [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
+- Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
 - Dnode network interface: [level-userdb-dnode](https://github.com/FrozenRidge/level-userdb-dnode)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
 
