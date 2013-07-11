@@ -92,7 +92,13 @@ The `db` object has the following methods:
 
 `findUser(email, cb)`
 
-Returns the user object if found, throws an exception if not.
+Returns the user object if found, 
+
+CB should be a signature of form:
+
+`function(err, user)`
+
+If account is not found, `err` is set and user is `undefined`.
 
 #### addUser
 
