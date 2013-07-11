@@ -1,0 +1,28 @@
+{
+  "name": "level-userdb",
+  "version": "0.1.0",
+  "description": "LevelDB-backed user database for things like web applications",
+  "main": "db.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha -R tap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FrozenRidge/level-userdb.git"
+  },
+  "author": "Niall O'Higgins",
+  "bugs": {
+    "url": "https://github.com/FrozenRidge/level-userdb/issues"
+  },
+  "dependencies": {
+    "byteup": "~0.1.1",
+    "bcrypt": "~0.7.6",
+    "levelup": "~0.10.0",
+    "leveldown": "~0.6.1",
+    "rimraf": "~2.2.0"
+  },
+  "devDependencies": {
+    "chai": "~1.7.2",
+    "mocha": "~1.12.0"
+  }
+}
