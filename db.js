@@ -43,7 +43,7 @@ function buildUser(password, data, cb) {
 }
 
 module.exports = function(filename) {
-  var name = filename || "./brevity.db"
+  var name = filename || "./level-userdb.db"
   // Install the bytewise leveldb plugin
   byteup()
   var db = levelup(name, {
