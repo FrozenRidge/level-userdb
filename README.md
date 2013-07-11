@@ -1,6 +1,8 @@
 level-userdb
 ============
 
+[![Build Status](https://travis-ci.org/FrozenRidge/level-userdb.png)](https://travis-ci.org/FrozenRidge/level-userdb)
+
 LevelDB-backed user database for Node.js. This does standard web/mobile app accounts storage:
 
 - users stored by email address
