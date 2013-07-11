@@ -11,11 +11,11 @@ describe('db', function() {
   var data = { some:"data" }
 
   after(function(done) {
-    rimraf('./brevity.db', function() { done() })
+    rimraf('level-userdb.db', function() { done() })
   })
 
   before(function(done) {
-    rimraf('./brevity.db', function() {
+    rimraf('level-userdb.db', function() {
       dbi = db()
       dbi.addUser(existantEmail, password, data, function() {
         done()
