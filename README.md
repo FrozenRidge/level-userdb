@@ -21,7 +21,7 @@ Tools:
 
 `npm install level-userdb`
 
-## Adding a user
+## Quickstart
 
 ```javascript
 
@@ -36,7 +36,7 @@ db.addUser('foobar@example.com', 'supersecret',
   }
 )
 
-// Checking a password for login
+// Checking a password for an account
 db.checkPassword('foobar@example.com', 'supersecret', function(err, user) {
   if (err) return console.log("invalid password: %s", err)
   console.log("password ok")
