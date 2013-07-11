@@ -21,6 +21,30 @@ Tools:
 
 `npm install level-userdb`
 
+## Adding a user
+
+```javascript
+
+var db = require('level-userdb')()
+
+// Adding a user
+db.addUser('foobar@example.com', 'supersecret',
+  {some:{nested:"metadata", associatedWithUser:true}, foo:[1,2,3]},
+  function(err) {
+    if (err) return console.log("error adding user: %s", err)
+    console.log("ok")
+  }
+)
+
+// Checking a password for login
+db.checkPassword('foobar@example.com', 'supersecret', function(err, user) {
+  if (err) return console.log("invalid password: %s", err)
+  console.log("password ok")
+})
+
+
+```
+
 #### CLI tool
 
 `npm install -g level-userdb-cli`
