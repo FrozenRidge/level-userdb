@@ -9,11 +9,19 @@ LevelDB-backed user database for Node.js. This does standard web/mobile app acco
 - passwords are encrypted with bcrypt
 - created and modified timestamps
 - store arbitrary json metadata along with each account
+- CLI admin tool: [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
+- Dnode network interface: [level-userdb-dnode](https://github.com/FrozenRidge/level-userdb-dnoe)
 
 
 ## Installation
 
 `npm install level-userdb`
+
+#### CLI tool
+
+`npm install -g level-userdb-cli`
+
+Learn more about CLI tool: [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
 
 ## Tests
 
