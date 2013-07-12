@@ -17,6 +17,7 @@ Tools & libraries:
 - Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
 - Dnode network interface: [level-userdb-dnode](https://github.com/FrozenRidge/level-userdb-dnode)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
+- Benchmark / stress test: [benchmark.js](
 
 
 ## Installation
@@ -56,6 +57,31 @@ Learn more about the CLI tool: [level-userdb-cli](https://github.com/FrozenRidge
 ## Tests
 
 Test suite can be run via `npm test`. It requires Chai and Mocha.
+
+## Benchmark / Performance
+
+`benchmark.js` is an attempt at a somewhat-useful benchmark or stress test. It
+attempts to create a mixed, concurrent workload of reads and writes. Feel free
+to look at the code and poke holes in how it is written. I don't claim it is a
+perfect or even especially-meaningful performance test.
+
+Here are some results from a 2013 11" MBA (SSD, 1.7Ghz Haswell i7) on OS X 10.8.4:
+
+```
+Starting benchmark with concurrency level 20
+reads: 3262.1/s changePasswords: 3312.4/s inserts: 3291.7/s modifies: 3292.2/s total ops: 13158.4/s errs: 0/s
+reads: 3179.3/s changePasswords: 3161.2/s inserts: 3220.9/s modifies: 3193.1/s total ops: 12754.5/s errs: 0/s
+reads: 3067.3/s changePasswords: 3092.8/s inserts: 3079.2/s modifies: 3079/s total ops: 12318.3/s errs: 0/s
+reads: 2918.1/s changePasswords: 2923.6/s inserts: 2949.7/s modifies: 2960/s total ops: 11751.4/s errs: 0/s
+reads: 2880/s changePasswords: 2897.7/s inserts: 2873.6/s modifies: 2879.4/s total ops: 11530.7/s errs: 0/s
+reads: 2758.7/s changePasswords: 2797.4/s inserts: 2777.3/s modifies: 2785.2/s total ops: 11118.6/s errs: 0/s
+reads: 2688.6/s changePasswords: 2711/s inserts: 2693/s modifies: 2685.3/s total ops: 10777.9/s errs: 0/s
+reads: 2586/s changePasswords: 2586.6/s inserts: 2586.4/s modifies: 2615.4/s total ops: 10374.4/s errs: 0/s
+benchmark completed
+total reads 249005 changePasswords: 250234 inserts: 250197 modifies: 250564 ops: 1000000 errs: 0
+
+```
+
 
 ## Database
 
