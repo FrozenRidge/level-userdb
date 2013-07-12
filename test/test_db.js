@@ -26,7 +26,7 @@ describe('db', function() {
 
   it('should export correct API', function(done) {
     var methods = ['findUser', 'addUser', 'checkPassword', 'changeEmail',
-      'changePassword', 'deleteUser', 'printAllUsers', 'modifyUser']
+      'changePassword', 'deleteUser', 'modifyUser']
     methods.forEach(function(method) {
       expect(dbi).property(method)
     })

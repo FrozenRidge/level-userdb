@@ -204,21 +204,5 @@ module.exports = function(db) {
     }))
   }).bind(db)
 
-  db.printAllUsers = (function() {
-    console.log("==========================================================================================")
-    console.log("Email \t\t\t Created At \t\t\t Modified At")
-    console.log("==========================================================================================")
-    this.createReadStream()
-      .on('data', function(data) {
-        process.stdout.write(dk(data.key) + "\t\t")
-        process.stdout.write(new Date(data.value.createdTimestamp.unixtime) + "\t")
-        process.stdout.write(new Date(data.value.modifiedTimestamp.unixtime) + "\n")
-      })
-      .on('error', function(err) {
-        console.log("error: %s", err)
-      })
-  }).bind(db)
-
-
   return db
 }
