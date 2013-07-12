@@ -47,7 +47,7 @@ var funcs = [
   // Insert a new user
   function(done) {
     var email = RECORDS + inserts + '-' + email
-    dbi.addUser(email, "password"+ops, function(err) { if (err) errs++; inserts++; ops++; done()}, true)
+    dbi.addUser(email, "password"+ops, {data:ops}, function(err) { if (err) errs++; inserts++; ops++; done()}, true)
   },
 ]
 
