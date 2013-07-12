@@ -102,7 +102,6 @@ function startBench() {
     var pmodifies = modifies - nmodifies
     var preads = reads - nreads
     var perrs = errs - nerrs
-    console.log("%d/%d ops run", ops, OPS)
     console.log("reads: %d/s changePasswords: %d/s inserts: %d/s modifies: %d/s total ops: %d/s errs: %d/s",
       preads / SAMPLE_RATE, pchangePasswords / SAMPLE_RATE, pinserts / SAMPLE_RATE, pmodifies / SAMPLE_RATE, pops / SAMPLE_RATE, perrs / SAMPLE_RATE)
     nops = ops
