@@ -26,12 +26,23 @@ function encryptPassword(password, cb) {
   bcrypt.hash(password, 10, cb)
 }
 
-function buildUser(password, data, cb) {
+function buildUser(password, data, cb, insecure) {
+  if (typeof cb === 'boolean') {
+    insecure = cb
+  }
   if (typeof data === 'function') {
     cb = data
     data = {}
   }
-  encryptPassword(password, function(err, pass) {
+  // This is for benchmarking without bcrypt hit
+  // DO NOT USE FOR ANY OTHER PURPOSE
+  var f = encryptPassword
+  if (insecure) {
+    f = function(password, cb) {
+      return cb(null, password)
+    }
+  }
+  f(password, function(err, pass) {
     var d = new Date()
     var userObj = {
       password: pass,
@@ -75,13 +86,21 @@ module.exports = function(filename) {
     })
   }).bind(db)
 
-  db.addUser = (function(email, password, data, cb) {
+  db.addUser = (function(email, password, data, cb, insecure) {
     var self = this
     if (typeof data === 'function') {
       cb = data
       data = {}
     }
-    encryptPassword(password, function(err, pass) {
+    var f = encryptPassword
+    // This is for benchmarking without bcrypt hit
+    // DO NOT USE FOR ANY OTHER PURPOSE
+    if (insecure) {
+      f = function(password, cb) {
+        return cb(null, password)
+      }
+    }
+    f(password, function(err, pass) {
       var d = new Date()
       var userObj = {
         password: pass,
@@ -123,7 +142,7 @@ module.exports = function(filename) {
     })
   }).bind(db)
 
-  db.changePassword = (function(email, newPassword, cb) {
+  db.changePassword = (function(email, newPassword, cb, insecure) {
     var self = this
     writeQ.push(function(done) {
       buildUser(newPassword, function(err, userObj) {
@@ -143,7 +162,7 @@ module.exports = function(filename) {
             cb.call(null, arguments)
           })
         })
-      })
+      }, insecure)
     })
   }).bind(db)
 
