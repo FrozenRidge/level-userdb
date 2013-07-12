@@ -1,3 +1,4 @@
+var async = require('async')
 var db = require('../db')
 var expect = require('chai').expect
 var rimraf = require('rimraf')
@@ -222,6 +223,53 @@ describe('db', function() {
           done()
         })
       }
+      add()
+    })
+
+  })
+
+  describe('writeQueue', function() {
+    var testEmail1 = 'writeQueue@example.com'
+    var testEmail2 = 'writeQueue2@example.com'
+    var testPassword = 'testblalbha'
+    var testPassword2 = 'testblalbha2'
+    var data = {woot:"foo"}
+
+    it('should serialize read-after-write operations', function(done) {
+      function add() {
+        dbi.addUser(testEmail1, testPassword, data, modify)
+      }
+
+      // Here we modify the same record in parallel, hoping to create a race condition.
+      function modify() {
+
+        async.parallel([
+          function(cb) {
+            dbi.changeEmail(testEmail1, testEmail2, function(err) {
+              cb(null, err)
+            })
+          },
+          function(cb) {
+            dbi.changePassword(testEmail1, testPassword2, function(err) {
+              cb(null, err)
+            })
+          },
+          function(cb) {
+            dbi.changePassword(testEmail2, testPassword2, function(err) {
+              cb(null, err)
+            })
+          },
+        ], function(err, res) {
+          var found = 0
+          res.forEach(function(item) {
+            if (item.name === "NotFoundError") found++
+          })
+          expect(found).to.eql(1)
+          done()
+        })
+
+      }
+
       add()
     })
 

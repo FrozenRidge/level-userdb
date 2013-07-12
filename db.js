@@ -1,3 +1,4 @@
+var async = require('async')
 var bcrypt = require('bcrypt')
 var byteup = require('byteup')
 var levelup = require('levelup')
@@ -51,6 +52,15 @@ module.exports = function(filename) {
     valueEncoding: 'json'
   })
 
+  // Set up the write queue with concurrency of 1.
+  // This serializes write-after-read operations.
+  // We could make this more fine-grained by making per-account queues.
+  var writeQ = async.queue(function(task, cb) {
+    task(function() {
+      cb()
+    })
+  }, 1)
+
 
   // Attach methods to LevelUp object
 
@@ -95,25 +105,44 @@ module.exports = function(filename) {
 
   db.changeEmail = (function(email, newEmail, cb) {
     var self = this
-    this.findUser(email, function(err, user) {
-      if (err) return cb(err)
-      user.modifiedTimestamp = genTimestamp()
-      self.batch()
-        .del(k(email))
-        .put(k(newEmail), user)
-        .write(cb)
+    writeQ.push(function(done) {
+      self.findUser(email, function(err, user) {
+        if (err) {
+          done()
+          return cb(err)
+        }
+        user.modifiedTimestamp = genTimestamp()
+        self.batch()
+          .del(k(email))
+          .put(k(newEmail), user)
+          .write(function(err) {
+            done()
+            cb.call(null, arguments)
+          })
+      })
     })
   }).bind(db)
 
   db.changePassword = (function(email, newPassword, cb) {
     var self = this
-    buildUser(newPassword, function(err, userObj) {
-      if (err) return cb(err)
-      self.findUser(email, function(err, user) {
-        if (err) return cb(err)
-        userObj.modifiedTimestamp = genTimestamp()
-        userObj.data = user.data
-        self.put(k(email), userObj, cb)
+    writeQ.push(function(done) {
+      buildUser(newPassword, function(err, userObj) {
+        if (err) {
+          done()
+          return cb(err)
+        }
+        self.findUser(email, function(err, user) {
+          if (err) {
+            done()
+            return cb(err)
+          }
+          userObj.modifiedTimestamp = genTimestamp()
+          userObj.data = user.data
+          self.put(k(email), userObj, function(err) {
+            done()
+            cb.call(null, arguments)
+          })
+        })
       })
     })
   }).bind(db)
@@ -124,11 +153,19 @@ module.exports = function(filename) {
 
   db.modifyUser = (function(email, data, cb) {
     var self = this
-    this.findUser(email, function(err, user) {
-      if (err) return cb(err)
-      user.data = data
-      user.modifiedTimestamp = genTimestamp()
-      self.put(k(email), user, cb)
+    writeQ.push(function(done) {
+      self.findUser(email, function(err, user) {
+        if (err) { 
+          done()
+          return cb(err)
+        }
+        user.data = data
+        user.modifiedTimestamp = genTimestamp()
+        self.put(k(email), user, function(err) {
+          done()
+          cb.call(null, arguments)
+        })
+      })
     })
   }).bind(db)
 
