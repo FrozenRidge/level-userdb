@@ -118,9 +118,7 @@ function startBench() {
     function(cb) {
       q.push(function(done) {
         var idx = Math.floor(Math.random() * 4) + 0
-        funcs[idx](function() {
-          done()
-        })
+        funcs[idx](done)
         cb(null)
       })
     },
