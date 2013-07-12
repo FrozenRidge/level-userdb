@@ -281,6 +281,7 @@ describe('db', function() {
     var data = {some:"data"}
 
     it('should return a stream of user objects', function(done) {
+      this.timeout(20000)
       // Insert 20 users
       var NUM_USERS = 20
 
