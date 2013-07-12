@@ -108,7 +108,7 @@ User values are JSON objects with the properties:
 
 ### Database API
 
-Require the `db` module and instantiate:
+Require the `level-userdb` module and instantiate:
 
 ```javascript
 
