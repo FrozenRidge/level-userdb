@@ -17,7 +17,7 @@ Tools & libraries:
 - Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
 - Dnode network interface: [level-userdb-dnode](https://github.com/FrozenRidge/level-userdb-dnode)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
-- Benchmark / stress test: [benchmark.js](
+- Benchmark / stress test: [benchmark.js](https://github.com/FrozenRidge/level-userdb/blob/master/benchmark.js)
 
 
 ## Installation
