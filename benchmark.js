@@ -85,38 +85,49 @@ function startBench() {
       cb()
     })
   }, CONCURRENCY)
-  var nops = 0
-  var nchangePasswords = 0
-  var ninserts = 0
-  var nmodifies = 0
-  var nreads = 0
-  var nerrs = 0
 
+  var OPS = 1000000
+  // 10 seconds
+  var SAMPLE_RATE = 10
+  var nops = ops
+  var nchangePasswords = changePasswords
+  var ninserts = inserts
+  var nmodifies = modifies
+  var nreads = reads
+  var nerrs = errs
   var iv = setInterval(function() {
-    nops = ops - nops
-    nchangePasswords = changePasswords - nchangePasswords
-    ninserts = inserts - ninserts
-    nmodifies = modifies - nmodifies
-    nreads = reads - nreads
-    nerrs = errs - nerrs
+    var pops = ops - nops
+    var pchangePasswords = changePasswords - nchangePasswords
+    var pinserts = inserts - ninserts
+    var pmodifies = modifies - nmodifies
+    var preads = reads - nreads
+    var perrs = errs - nerrs
+    console.log("%d/%d ops run", ops, OPS)
     console.log("reads: %d/s changePasswords: %d/s inserts: %d/s modifies: %d/s total ops: %d/s errs: %d/s",
-      nreads / 10, nchangePasswords / 10, ninserts / 10, nmodifies / 10 , nops / 10, nerrs / 10)
-  }, 10000)
+      preads / SAMPLE_RATE, pchangePasswords / SAMPLE_RATE, pinserts / SAMPLE_RATE, pmodifies / SAMPLE_RATE, pops / SAMPLE_RATE, perrs / SAMPLE_RATE)
+    nops = ops
+    nchangePasswords = changePasswords
+    ninserts = inserts
+    nmodifies = modifies
+    nreads = reads
+    nerrs = errs
+    t = new Date().getTime()
+  },  SAMPLE_RATE * 1000)
 
-  var OPS = 100000000
-  var i = 0
   async.whilst(
-    function() { return i < OPS },
+    function() { return ops < OPS },
     function(cb) {
-      var idx = Math.floor(Math.random() * 4) + 0
-      q.push(function(done) {funcs[idx](done); cb(null)})
-      i++
-      if (i % 10000 === 0) {
-        console.log("%d/%d ops run", i, OPS)
-      }
+      q.push(function(done) {
+        var idx = Math.floor(Math.random() * 4) + 0
+        funcs[idx](function() {
+          done()
+        })
+        cb(null)
+      })
     },
     function() {
       console.log("benchmark completed")
+      console.log("total reads %d changePasswords: %d inserts: %d modifies: %d ops: %d errs: %d", reads, changePasswords, inserts, modifies, ops, errs)
       process.exit(0)
     })
 }
