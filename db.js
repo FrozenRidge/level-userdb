@@ -2,6 +2,7 @@ var async = require('async')
 var bcrypt = require('bcrypt')
 var byteup = require('byteup')
 var levelup = require('levelup')
+var through = require('through')
 
 var PREFIX = "user:"
 
@@ -19,7 +20,6 @@ function genTimestamp(dt) {
   var d = dt || new Date()
 
   return {unixtime: d.getTime(), hrtime: process.hrtime()}
-
 }
 
 function encryptPassword(password, cb) {
@@ -188,6 +188,16 @@ module.exports = function(filename) {
     })
   }).bind(db)
 
+  db.createUserStream = (function(opts) {
+    return this.createReadStream(opts).pipe(through(function write(data) {
+      var u = data.value
+      u.modifiedDate = new Date(u.modifiedTimestamp.unixtime)
+      u.createdDate = new Date(u.createdTimestamp.unixtime)
+      u.email = dk(data.key)
+      this.queue(u)
+    }))
+  }).bind(db)
+
   db.printAllUsers = (function() {
     console.log("==========================================================================================")
     console.log("Email \t\t\t Created At \t\t\t Modified At")
@@ -200,7 +210,6 @@ module.exports = function(filename) {
       })
       .on('error', function(err) {
         console.log("error: %s", err)
-
       })
   }).bind(db)
 

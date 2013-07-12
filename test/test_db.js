@@ -275,4 +275,44 @@ describe('db', function() {
 
   })
 
+  describe('#createUserStream', function() {
+    var baseEmail = 'createUserStream@example.com'
+    var password = 'mysecret'
+    var data = {some:"data"}
+
+    it('should return a stream of user objects', function(done) {
+      // Insert 20 users
+      var NUM_USERS = 20
+
+      var i = 0
+      async.whilst(
+        function() { return i < NUM_USERS },
+        function(cb) {
+          dbi.addUser(i + '-' + baseEmail, password, data, cb)
+          i++
+        },
+        start
+      )
+
+      var cnt = 0
+      function start() {
+        dbi.createUserStream()
+          .on('data', function(user) {
+            expect(user).to.exist
+            expect(user.email).to.be.a('string')
+            expect(user.password).to.be.a('string')
+            expect(user.modifiedDate).to.be.a('date')
+            expect(user.createdDate).to.be.a('date')
+            expect(user.data).to.be.a('object')
+            cnt++
+          })
+          .on('end', function() {
+            expect(cnt).to.be.above(NUM_USERS)
+            done()
+          })
+      }
+    })
+
+  })
+
 })

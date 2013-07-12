@@ -167,6 +167,13 @@ Delete a user object by email address.
 
 Update the `data` property for the given email address.
 
+#### createUserStream
+
+`createUserStream(opts)`
+
+Returns an object stream of users. This accepts the same options object as LevelUP's `createReadStream()` so can be used
+for range queries etc.
+
 #### printAllUsers
 
 `printAllUsers()`
