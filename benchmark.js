@@ -26,25 +26,25 @@ function randValidEmail() {
 
 var funcs = [
 
-  // Find a random user.
+  // Find a random user. (no lock)
   function(done) {
     var email = randValidEmail()
     dbi.findUser(email, function(err) { if (err) errs++; reads++; ops++; done() })
   },
 
-  // Modify a user's data.
+  // Modify a user's data. (goes through lock)
   function(done) {
     var email = randValidEmail()
     dbi.modifyUser(email, {some:"data", foobar:ops}, function(err) { if (typeof err !== 'object') errs++; modifies++; ops++; done()})
   },
 
-  // Change password of existing user
+  // Change password of existing user (goes through lock)
   function(done) {
     var email = randValidEmail()
     dbi.changePassword(email, "password"+ops, function(err) { if (typeof err !== 'object') errs++; changePasswords++; ops++; done()}, true)
   },
 
-  // Insert a new user
+  // Insert a new user (no lock)
   function(done) {
     var email = RECORDS + inserts + '-' + baseEmail
     dbi.addUser(email, "password"+ops, {data:ops}, function(err) { if (err) errs++; inserts++; ops++; done()}, true)
@@ -112,13 +112,11 @@ function startBench() {
       q.push(function(done) {funcs[idx](done); cb(null)})
       i++
       if (i % 10000 === 0) {
-        console.log("%d/%d", i, OPS)
+        console.log("%d/%d ops run", i, OPS)
       }
     },
     function() {
       console.log("benchmark completed")
       process.exit(0)
-  
-  
     })
 }
