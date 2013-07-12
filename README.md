@@ -58,7 +58,7 @@ Learn more about the CLI tool: [level-userdb-cli](https://github.com/FrozenRidge
 
 Test suite can be run via `npm test`. It requires Chai and Mocha.
 
-## Benchmark / Performance
+## Benchmark / Performance / Stress-test
 
 `benchmark.js` is an attempt at a somewhat-useful benchmark or stress test. It
 attempts to create a mixed, concurrent workload of reads and writes. Feel free
