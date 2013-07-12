@@ -1,7 +1,7 @@
 var async = require('async')
 var db = require('./db')
 
-var CONCURRENCY = 1
+var CONCURRENCY = 10
 // 100000 accounts
 var RECORDS = 100000
 
