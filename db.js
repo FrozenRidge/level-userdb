@@ -54,14 +54,20 @@ function buildUser(password, data, cb, insecure) {
   })
 }
 
-module.exports = function(filename) {
-  var name = filename || "./level-userdb.db"
-  // Install the bytewise leveldb plugin
-  byteup()
-  var db = levelup(name, {
-    keyEncoding: 'bytewise',
-    valueEncoding: 'json'
-  })
+// DB can be a string, undefined or an existing LevelUP-compatible object
+module.exports = function(db) {
+  var name = "./level-userdb.db"
+  if (typeof db === 'string') {
+    name = db
+  }
+  if (!db || typeof db === 'string') {
+    // Install the bytewise leveldb plugin
+    byteup()
+    db = levelup(name, {
+      keyEncoding: 'bytewise',
+      valueEncoding: 'json'
+    })
+  }
 
   // Set up the write queue with concurrency of 1.
   // This serializes write-after-read operations.

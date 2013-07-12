@@ -13,9 +13,9 @@ LevelDB-backed user database for Node.js. This does standard web/mobile app acco
 
 Tools & libraries:
 
-- CLI admin tool (supports local and stand-alone network server): [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
+- CLI admin tool (local and network): [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
+- Compatible with multilevel for network access: [multilevel](https://github.com/juliangruber/multilevel)
 - Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
-- Dnode network interface: [level-userdb-dnode](https://github.com/FrozenRidge/level-userdb-dnode)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
 - Benchmark / stress test: [benchmark.js](https://github.com/FrozenRidge/level-userdb/blob/master/benchmark.js)
 
@@ -113,6 +113,19 @@ Require the `level-userdb` module and instantiate:
 ```javascript
 
 var db = require('level-userdb')('./mydatabase')
+```
+
+#### LevelUP plugins
+
+You can also pass an existing LevelUP compatible object. This enables you to take advantage of the
+[many LevelUP plugins and modules](https://github.com/rvagg/node-levelup/wiki/Modules).
+
+For example [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
+takes advantage of this to make `level-userdb` accessible over the network with [multilevel](https://github.com/juliangruber/multilevel).
+
+```javascript
+var db = require('level-userdb')(myLevelUpDB)
+
 ```
 
 The `db` object has the following methods:
