@@ -9,12 +9,12 @@ LevelDB-backed user database for Node.js. This does standard web/mobile app acco
 - Passwords are encrypted with bcrypt
 - Created and modified timestamps
 - Store arbitrary JSON metadata along with each account
+- Compatible with multilevel for network access: [multilevel](https://github.com/juliangruber/multilevel)
 - Multi-step write-after-read operations (such as changeEmail, changePassword and modifyUser) are run serially to avoid race conditions.
 
 Tools & libraries:
 
 - CLI admin tool (local and network): [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
-- Compatible with multilevel for network access: [multilevel](https://github.com/juliangruber/multilevel)
 - Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
 - Benchmark / stress test: [benchmark.js](https://github.com/FrozenRidge/level-userdb/blob/master/benchmark.js)
