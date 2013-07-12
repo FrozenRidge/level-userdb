@@ -235,7 +235,7 @@ describe('db', function() {
     var testPassword2 = 'testblalbha2'
     var data = {woot:"foo"}
 
-    it('should serialize read-after-write operations', function(done) {
+    it('should serialize multi-step write-after-read operations', function(done) {
       function add() {
         dbi.addUser(testEmail1, testPassword, data, modify)
       }
