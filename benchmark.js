@@ -46,7 +46,7 @@ var funcs = [
 
   // Insert a new user
   function(done) {
-    var email = RECORDS + inserts + '-' + email
+    var email = RECORDS + inserts + '-' + baseEmail
     dbi.addUser(email, "password"+ops, {data:ops}, function(err) { if (err) errs++; inserts++; ops++; done()}, true)
   },
 ]
@@ -103,7 +103,7 @@ function startBench() {
       nreads / 10, nchangePasswords / 10, ninserts / 10, nmodifies / 10 , nops / 10, nerrs / 10)
   }, 10000)
 
-  var OPS = 1000000
+  var OPS = 100000000
   var i = 0
   async.whilst(
     function() { return i < OPS },
