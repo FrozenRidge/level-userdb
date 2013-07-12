@@ -63,7 +63,8 @@ Test suite can be run via `npm test`. It requires Chai and Mocha.
 `benchmark.js` is an attempt at a somewhat-useful benchmark or stress test. It
 attempts to create a mixed, concurrent workload of reads and writes. Feel free
 to look at the code and poke holes in how it is written. I don't claim it is a
-perfect or even especially-meaningful performance test.
+perfect or even especially-meaningful performance test. Note that it disables
+`bcrypt` on passwords for all writes.
 
 Here are some results from a 2013 11" MBA (SSD, 1.7Ghz Haswell i7) on OS X 10.8.4:
 
