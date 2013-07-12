@@ -1,6 +1,6 @@
 {
   "name": "level-userdb",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "LevelDB-backed user database for things like web applications",
   "main": "db.js",
   "scripts": {
