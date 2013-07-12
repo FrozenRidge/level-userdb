@@ -9,7 +9,7 @@ LevelDB-backed user database for Node.js. This does standard web/mobile app acco
 - Passwords are encrypted with bcrypt
 - Created and modified timestamps
 - Store arbitrary JSON metadata along with each account
-- Read-after-write operations (such as changeEmail, changePassword and modifyUser) are run serially to avoid race conditions.
+- Multi-step write-after-read operations (such as changeEmail, changePassword and modifyUser) are run serially to avoid race conditions.
 
 Tools & libraries:
 
