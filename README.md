@@ -17,7 +17,7 @@ Tools & libraries:
 - CLI admin tool (local and network): [level-userdb-cli](https://github.com/FrozenRidge/level-userdb-cli)
 - Standalone network server: [level-userdb-server](https://github.com/FrozenRidge/level-userdb-server)
 - PassportJS helpers: [level-userdb-passport](https://github.com/FrozenRidge/level-userdb-passport)
-- Benchmark / stress test: [benchmark.js](https://github.com/FrozenRidge/level-userdb/blob/master/benchmark.js)
+- Benchmark / stress test: [level-userdb-bench](https://github.com/FrozenRidge/level-userdb-bench)
 
 
 ## Installation
@@ -60,7 +60,7 @@ Test suite can be run via `npm test`. It requires Chai and Mocha.
 
 ## Benchmark / Performance / Stress-test
 
-`benchmark.js` is an attempt at a somewhat-useful benchmark or stress test. It
+[level-userdb-bench](https://github.com/FrozenRidge/level-userdb-bench) is an attempt at a somewhat-useful benchmark or stress test. It
 attempts to create a mixed, concurrent workload of reads and writes. Feel free
 to look at the code and poke holes in how it is written. I don't claim it is a
 perfect or even especially-meaningful performance test. Note that it disables
@@ -186,10 +186,3 @@ Update the `data` property for the given email address.
 
 Returns an object stream of users. This accepts the same options object as LevelUP's `createReadStream()` so can be used
 for range queries etc.
-
-#### printAllUsers
-
-`printAllUsers()`
-
-Print all the users in the database along with their created and last modified timestamps.
-
