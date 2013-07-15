@@ -1,15 +1,14 @@
-level-userdb
-============
+# level-userdb
 
 [![Build Status](https://travis-ci.org/FrozenRidge/level-userdb.png)](https://travis-ci.org/FrozenRidge/level-userdb)
 
-LevelDB-backed user database for Node.js. This does standard web/mobile app accounts storage:
+LevelDB-backed user database for Node.js. This does standard web/mobile app account storage:
 
-- Users stored by email address
-- Passwords are encrypted with bcrypt
+- Users are stored by email address
+- Passwords are hashed with bcrypt
 - Created and modified timestamps
 - Store arbitrary JSON metadata along with each account
-- Compatible with multilevel for network access: [multilevel](https://github.com/juliangruber/multilevel)
+- Compatible with [multilevel](https://github.com/juliangruber/multilevel) for network access
 - Multi-step write-after-read operations (such as changeEmail, changePassword and modifyUser) are run serially to avoid race conditions.
 
 Tools & libraries:
