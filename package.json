@@ -20,12 +20,12 @@
     "userdb"
   ],
   "dependencies": {
-    "byteup": "~0.1.1",
     "bcrypt": "~0.7.6",
-    "levelup": "~0.10.0",
-    "leveldown": "~0.6.1",
+    "levelup": "~0.17.0",
+    "leveldown": "~0.9.1",
     "async": "~0.2.9",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "bytewise": "~0.6.1"
   },
   "devDependencies": {
     "chai": "~1.7.2",
