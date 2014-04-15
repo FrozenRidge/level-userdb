@@ -5,6 +5,7 @@ var through = require('through')
 var bytewise = require('bytewise')
 
 var PREFIX = "user:"
+var encoding = { keyEncoding: 'binary', valueEncoding: 'json' }
 
 // Turn an email into a key
 function k(email) {
@@ -61,10 +62,7 @@ module.exports = function(db) {
     name = db
   }
   if (!db || typeof db === 'string') {
-    db = levelup(name, {
-      keyEncoding: 'binary',
-      valueEncoding: 'json'
-    })
+    db = levelup(name, encoding)
   }
 
   // Set up the write queue with concurrency of 1.
@@ -80,7 +78,7 @@ module.exports = function(db) {
   // Attach methods to LevelUp object
 
   db.findUser = (function (email, cb) {
-    this.get(k(email), function(err, user) {
+    this.get(k(email), encoding, function(err, user) {
       if (err) return cb(err)
       user.modifiedDate = new Date(user.modifiedTimestamp.unixtime)
       user.createdDate = new Date(user.createdTimestamp.unixtime)
@@ -112,7 +110,7 @@ module.exports = function(db) {
         modifiedTimestamp: genTimestamp(d),
         data:data
       }
-      self.put(k(email), userObj, cb)
+      self.put(k(email), userObj, encoding, cb)
     })
   }).bind(db)
 
@@ -137,8 +135,7 @@ module.exports = function(db) {
         user.modifiedTimestamp = genTimestamp()
         self.batch()
           .del(k(email))
-          // it's strange that we have to specify the valueEnconding here again
-          .put(k(newEmail), user, {valueEncoding: "json"})
+          .put(k(newEmail), user, encoding)
           .write(function(err) {
             done()
             cb.call(null, arguments)
@@ -162,7 +159,7 @@ module.exports = function(db) {
           }
           userObj.modifiedTimestamp = genTimestamp()
           userObj.data = user.data;
-          self.put(k(email), userObj, function(err) {
+          self.put(k(email), userObj, encoding, function(err) {
             done()
             cb.call(null, arguments)
           })
@@ -185,7 +182,7 @@ module.exports = function(db) {
         }
         user.data = data
         user.modifiedTimestamp = genTimestamp()
-        self.put(k(email), user, function(err) {
+        self.put(k(email), user, encoding, function(err) {
           done()
           cb.call(null, arguments)
         })
