@@ -262,7 +262,7 @@ describe('db', function() {
         ], function(err, res) {
           var found = 0
           res.forEach(function(item) {
-            if (item.name === "NotFoundError") found++
+            if (item && item.name === "NotFoundError") found++
           })
           expect(found).to.eql(1)
           done()
