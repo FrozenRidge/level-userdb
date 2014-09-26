@@ -141,7 +141,7 @@ module.exports = function(db) {
           .put(k(newEmail), user, {valueEncoding: "json"})
           .write(function(err) {
             done()
-            cb.call(null, arguments)
+            cb(err)
           })
       })
     })
@@ -164,7 +164,7 @@ module.exports = function(db) {
           userObj.data = user.data;
           self.put(k(email), userObj, function(err) {
             done()
-            cb.call(null, arguments)
+            cb(err)
           })
         })
       }, insecure)
@@ -187,7 +187,7 @@ module.exports = function(db) {
         user.modifiedTimestamp = genTimestamp()
         self.put(k(email), user, function(err) {
           done()
-          cb.call(null, arguments)
+          cb(err)
         })
       })
     })
