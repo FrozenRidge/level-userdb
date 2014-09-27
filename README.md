@@ -51,7 +51,6 @@ var LevelUp = require("level");
 var Sublevel = require("level-sublevel");
 var db = Sublevel(LevelUp("./db"));
 
-//you have to specify key- and valueEncoding
 var users = db.sublevel("users", { keyEncoding: 'binary', valueEncoding: "json" })
 var levelUserDb = require("level-userdb")(users);
 
